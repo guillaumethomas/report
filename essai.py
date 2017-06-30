@@ -24,22 +24,26 @@ def essai():
 
     table = PrettyTable(['Name','Bugs'])
     table_2 = PrettyTable(['Name', 'Bugs lists'])
+    table_3 = PrettyTable(['Name','# Bugs', 'Bugs lists'])
+
     for name in name_lst:
         table.add_row([name,nb_dict[name]])
         table_2.add_row([name, ','.join(name_dict[name])])
+        table_3.add_row([name, nb_dict[name],','.join(name_dict[name])])
 
     print(table)
     print(table_2)
+    print(table_3)
 
 
-    table_txt = table.get_string()
-    table_2_txt = table_2.get_string()
+    tables_txt = [table.get_string(), table_2.get_string(),table_3.get_string()]
 
     file = open('report.txt', 'w')
-    file.write(table_txt)
-    file.write('\n')
-    file.write(table_2_txt)
-    file.write('')
+
+    for txt in tables_txt:
+        file.write(txt)
+        file.write('\n')
+
 
     file.close()
 
