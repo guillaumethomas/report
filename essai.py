@@ -26,5 +26,11 @@ def essai():
 
     print(table)
 
+    table_txt = table.get_string()
+
+    file = open('report.txt', 'w')
+    file.write(table_txt)
+    file.close()
+
 if __name__ == "__main__":
     essai()
