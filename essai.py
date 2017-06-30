@@ -2,6 +2,7 @@ from collections import defaultdict
 from tabulate import tabulate
 from prettytable import PrettyTable
 import matplotlib.pyplot as plt
+from custom_class import user_bugs
 from docx import Document
 from docx.shared import Inches
 #https://python-docx.readthedocs.io/en/latest/
@@ -71,7 +72,28 @@ def word_doc(name,pic_lst):
     p = document.add_paragraph('A plain paragraph having some ')
 
     document.add_picture(pic_lst[0], width=Inches(5))
+
+    document.add_paragraph()
+
+    user1 = user_bugs('guillaume',1)
+    user2= user_bugs('ben',2)
+
+    record_set = [user1,user2]
+
+    table = document.add_table(rows=1, cols=2)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'Name'
+    hdr_cells[1].text = 'Nb bugs'
+    for item in record_set:
+        row_cells = table.add_row().cells
+        row_cells[0].text = str(item.user)
+        row_cells[1].text = str(item.nb_bugs)
+
+
+    document.add_paragraph()
+
     return document.save(name)
+
 
 if __name__ == "__main__":
     data = essai()
