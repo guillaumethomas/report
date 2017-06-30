@@ -1,4 +1,6 @@
 from collections import defaultdict
+from tabulate import tabulate
+from prettytable import PrettyTable
 
 def essai():
     print('Essai')
@@ -10,13 +12,19 @@ def essai():
     print(essai_lst)
 
     name_dict = defaultdict(list)
+    nb_dict = defaultdict(int)
 
     for dc in essai_lst:
         name_dict[dc['name']].append(dc['id'])
+        nb_dict[dc['name']] += 1
 
-    print(name_dict)
+    name_lst = list(nb_dict.keys())
 
+    table = PrettyTable(['Name','Bugs'])
+    for name in name_lst:
+        table.add_row([name,nb_dict[name]])
 
+    print(table)
 
 if __name__ == "__main__":
     essai()
