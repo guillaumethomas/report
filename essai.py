@@ -1,6 +1,10 @@
 from collections import defaultdict
 from tabulate import tabulate
 from prettytable import PrettyTable
+import matplotlib.pyplot as plt
+from docx import Document
+from docx.shared import Inches
+#https://python-docx.readthedocs.io/en/latest/
 
 def essai():
     print('Essai')
@@ -9,7 +13,7 @@ def essai():
                  {'name': 'guillaume', 'id': 180}]
 
 
-    print(essai_lst)
+    #print(essai_lst)
 
     name_dict = defaultdict(list)
     nb_dict = defaultdict(int)
@@ -20,7 +24,11 @@ def essai():
 
     name_lst = list(nb_dict.keys())
 
+    return name_dict, nb_dict, name_lst
 
+def table(data_lst):
+
+    name_dict, nb_dict, name_lst = data_lst
 
     table = PrettyTable(['Name','Bugs'])
     table_2 = PrettyTable(['Name', 'Bugs lists'])
@@ -47,5 +55,32 @@ def essai():
 
     file.close()
 
+    return file
+
+def chart(x,y):
+
+    plt.plot(x,y, 'ro')
+    plt.axis([0, 6, 0, 20])
+    return plt
+
+def word_doc(name,pic_lst):
+    document = Document()
+
+    document.add_heading('Bug report', 0)
+
+    p = document.add_paragraph('A plain paragraph having some ')
+
+    document.add_picture(pic_lst[0], width=Inches(5))
+    return document.save(name)
+
 if __name__ == "__main__":
-    essai()
+    data = essai()
+
+    file = table(data)
+    print(file.name)
+
+    fig = chart([1, 2, 3, 4], [1, 4, 9, 16])
+    pic = [fig.savefig('test.png')]
+    word_doc('test.docx',['test.png'])
+    fig.show()
+    print(type(pic[0]))
